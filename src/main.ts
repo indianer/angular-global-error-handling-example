@@ -8,9 +8,10 @@ import { AppComponent } from './app/app.component';
 
 import { environment } from './environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CustomErrorHandler } from './app/custom-error-handler.service';
+import { GlobalHttpErrorHandler } from './app/global-http-error-handler.interceptor';
 
 if (environment.production) {
   enableProdMode();
@@ -26,6 +27,11 @@ bootstrapApplication(AppComponent, {
     {
       provide: ErrorHandler,
       useClass: CustomErrorHandler,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GlobalHttpErrorHandler,
+      multi: true,
     },
   ],
 }).catch((err) => console.error(err));

@@ -11,16 +11,21 @@ import { WidgetErrorComponent } from './widget-error/widget-error.component';
 @Component({
   selector: 'app-widget',
   standalone: true,
-  imports: [MatIconModule, CommonModule, MatDividerModule, MatButtonModule, WidgetErrorComponent],
+  imports: [
+    MatIconModule,
+    CommonModule,
+    MatDividerModule,
+    MatButtonModule,
+    WidgetErrorComponent,
+  ],
   templateUrl: './widget.component.html',
-  styleUrls: ['./widget.component.scss']
+  styleUrls: ['./widget.component.scss'],
 })
 export class WidgetComponent implements OnInit {
-
   tasks$!: Observable<Task[]>;
   error: Error | null = null;
 
-  constructor(private widgetData: WidgetDataService) { }
+  constructor(private widgetData: WidgetDataService) {}
 
   ngOnInit(): void {
     this.tasks$ = this.widgetData.load();
@@ -28,6 +33,16 @@ export class WidgetComponent implements OnInit {
 
   addTask() {
     // unreliable method
-    this.widgetData.addTaskSync({ id: 0, title: 'New Task' });
+    // (({}) as any).someMethod();
+    try {
+      setTimeout(() => {
+        this.widgetData.addTaskSync({ id: 0, title: 'New Task' });
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        this.error = error;
+        throw error;
+      }
+    }
   }
 }

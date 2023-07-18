@@ -1,3 +1,7 @@
+# YouTube
+
+https://www.youtube.com/watch?v=e03EHZIVJtM&ab_channel=DecodedFrontend
+
 # AngularGlobalErrorHandlingExample
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.0.
